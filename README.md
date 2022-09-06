@@ -11,7 +11,7 @@ Instruction for deploying and running project:
 
 1. run below command in these directories(wallet and wallet/configserver and wallet/gateway and wallet/discoveryserver)
 
-mvn clean package
+mvn clean package -DskipTests
 
 3. run below command in /wallet and wait about 5 minute after that you can test wallet services
 
