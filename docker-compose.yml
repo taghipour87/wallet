@@ -1,0 +1,162 @@
+version: "3.9"
+
+services:
+
+  zookeeper:
+    image: 'bitnami/zookeeper:latest'
+    ports:
+      - '2181:2181'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+  kafka:
+    image: 'bitnami/kafka:latest'
+    ports:
+      - '9092:9092'
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper
+
+  zipkin:
+    image: openzipkin/zipkin
+    mem_limit: 700m
+    ports:
+      - "9411:9411"
+    networks:
+     - wallet
+
+  configserver:
+    build: ./configserver
+    image: wallet/configserver:latest
+    mem_limit: 700m
+    ports:
+      - "8071:8071"
+    networks:
+     - wallet
+    depends_on:
+      - zipkin
+    environment:
+      SPRING_PROFILES_ACTIVE: native
+      SPRING_ZIPKIN_BASEURL: http://zipkin:9411/
+      
+  discoveryserver:
+    build: ./discoveryserver
+    image: wallet/discoveryserver:latest
+    mem_limit: 700m
+    ports:
+      - "8070:8070"
+    networks:
+     - wallet
+    depends_on:
+     configserver:
+      condition: service_started
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 15s
+        max_attempts: 3
+        window: 120s
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      SPRING_ZIPKIN_BASEURL: http://zipkin:9411/
+
+  
+  player:
+    build: ./player
+    image: wallet/player:latest
+    mem_limit: 700m
+    ports:
+      - "8090:8090"
+    networks:
+      - wallet
+    depends_on:
+     - configserver
+     - discoveryserver
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 30s
+        max_attempts: 3
+        window: 120s
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discoveryserver:8070/eureka/
+      SPRING_ZIPKIN_BASEURL: http://zipkin:9411/
+      
+  account:
+    build: ./account
+    image: wallet/account:latest
+    mem_limit: 700m
+    ports:
+      - "8080:8080"
+    networks:
+      - wallet
+    depends_on:
+      - configserver
+      - discoveryserver
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 30s
+        max_attempts: 3
+        window: 120s
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discoveryserver:8070/eureka/
+      SPRING_ZIPKIN_BASEURL: http://zipkin:9411/
+    
+  transaction:
+    build: ./transaction
+    image: wallet/transaction:latest
+    mem_limit: 700m
+    ports:
+      - "9000:9000"
+    networks:
+      - wallet
+    depends_on:
+      - configserver
+      - discoveryserver
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 30s
+        max_attempts: 3
+        window: 120s
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discoveryserver:8070/eureka/
+      SPRING_ZIPKIN_BASEURL: http://zipkin:9411/
+      
+  gateway:
+    build: ./gateway
+    image: wallet/gateway:latest
+    mem_limit: 700m
+    ports:
+      - "8072:8072"
+    networks:
+      - wallet
+    depends_on:
+      - configserver
+      - discoveryserver
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 45s
+        max_attempts: 3
+        window: 180s
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discoveryserver:8070/eureka/
+      SPRING_ZIPKIN_BASEURL: http://zipkin:9411/
+
+networks:
+  wallet:
