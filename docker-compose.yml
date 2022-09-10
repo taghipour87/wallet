@@ -33,13 +33,12 @@ services:
     networks:
      - wallet
     depends_on:
-     configserver:
-      condition: service_started
+      - configserver
     deploy:
       restart_policy:
         condition: on-failure
-        delay: 15s
-        max_attempts: 3
+        delay: 60s
+        max_attempts: 30
         window: 120s
     environment:
       SPRING_PROFILES_ACTIVE: prod
@@ -56,12 +55,12 @@ services:
     networks:
       - wallet
     depends_on:
-     - configserver
-     - discoveryserver
+      - configserver
+      - discoveryserver
     deploy:
       restart_policy:
         condition: on-failure
-        delay: 30s
+        delay: 60s
         max_attempts: 3
         window: 120s
     environment:
@@ -79,13 +78,13 @@ services:
     networks:
       - wallet
     depends_on:
-     - configserver
-     - discoveryserver
+      - configserver
+      - discoveryserver
     deploy:
       restart_policy:
         condition: on-failure
-        delay: 30s
-        max_attempts: 3
+        delay: 60s
+        max_attempts: 30
         window: 120s
     environment:
       SPRING_PROFILES_ACTIVE: prod
@@ -107,8 +106,8 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
-        delay: 30s
-        max_attempts: 3
+        delay: 60s
+        max_attempts: 30
         window: 120s
     environment:
       SPRING_PROFILES_ACTIVE: prod
@@ -130,8 +129,8 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
-        delay: 45s
-        max_attempts: 3
+        delay: 60s
+        max_attempts: 30
         window: 180s
     environment:
       SPRING_PROFILES_ACTIVE: prod
