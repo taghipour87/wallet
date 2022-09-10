@@ -13,6 +13,6 @@ Instruction for deploying and running project:
 
 mvn clean package -DskipTests
 
-3. run below command in /wallet and wait about 5 minute after that you can test wallet services
+3. run below command in /wallet directory and wait about 10 minute after that you can test wallet services
 
 docker-compose up -d
