@@ -7,10 +7,7 @@ import lombok.Data;
  * @DATE 9/11/2022
  */
 @Data
-public class PlayerDto {
-
-    private long id;
+public class PlayerResponseDto {
+    private long playerId;
     private String accountNumber;
-    private PlayerStatus playerStatus;
-
 }

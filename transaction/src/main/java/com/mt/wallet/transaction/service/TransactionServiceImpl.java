@@ -3,11 +3,13 @@ package com.mt.wallet.transaction.service;
 import com.mt.wallet.transaction.model.dto.AccountResponseDto;
 import com.mt.wallet.transaction.model.dto.PaymentRequestDto;
 import com.mt.wallet.transaction.model.dto.PaymentResponseDto;
+import com.mt.wallet.transaction.model.dto.PlayerResponseDto;
 import com.mt.wallet.transaction.model.entity.Status;
 import com.mt.wallet.transaction.model.entity.Transaction;
 import com.mt.wallet.transaction.model.entity.Type;
 import com.mt.wallet.transaction.repository.TransactionRepository;
 import com.mt.wallet.transaction.service.client.AccountFeignClient;
+import com.mt.wallet.transaction.service.client.PlayerFeignClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,14 +27,17 @@ public class TransactionServiceImpl implements TransactionService {
 
     private final TransactionRepository repository;
     private final AccountFeignClient accountFeignClient;
+    private final PlayerFeignClient playerFeignClient;
 
     @Override
     public List<Transaction> findByPlayerId(long playerId) {
+        playerFeignClient.getPlayer(playerId);
         return repository.findByPlayerId(playerId);
     }
 
     @Override
     public PaymentResponseDto debit(PaymentRequestDto paymentRequestDto) {
+        playerFeignClient.getPlayer(paymentRequestDto.getPlayerId());
         Transaction createdTransaction = saveCreatedTransaction(paymentRequestDto, Type.DEBIT);
         AccountResponseDto accountResponseDto = accountFeignClient.debit(paymentRequestDto).getBody();
         Transaction completedTransaction = saveCompletedTransaction(createdTransaction, Objects.requireNonNull(accountResponseDto));
@@ -41,6 +46,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public PaymentResponseDto credit(PaymentRequestDto paymentRequestDto) {
+        playerFeignClient.getPlayer(paymentRequestDto.getPlayerId());
         Transaction transaction = saveCreatedTransaction(paymentRequestDto, Type.CREDIT);
         AccountResponseDto accountResponseDto = accountFeignClient.credit(paymentRequestDto).getBody();
         Transaction completedTransaction = saveCompletedTransaction(transaction, Objects.requireNonNull(accountResponseDto));

@@ -1,6 +1,6 @@
 package com.mt.wallet.player.model.dto;
 
-import com.mt.wallet.player.model.entity.Status;
+import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -8,8 +8,8 @@ import lombok.Data;
  * @DATE 9/11/2022
  */
 @Data
-public class PlayerDto {
-    private long id;
+@Builder
+public class PlayerResponseDto {
+    private long playerId;
     private String accountNumber;
-    private Status playerStatus;
 }
