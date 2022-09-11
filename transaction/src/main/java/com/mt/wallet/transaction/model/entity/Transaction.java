@@ -1,14 +1,13 @@
 package com.mt.wallet.transaction.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -17,20 +16,22 @@ import java.util.UUID;
  */
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(nullable = false, length = 36)
+    private long id;
+    @Column(nullable = false, length = 36, unique=true)
     private UUID transactionId;
     @Column(nullable = false)
     private long playerId;
-    @Column(length = 12)
+    @Column(length = 17)
     private String accountNumber;
     @Column(nullable = false)
     private Status status;
@@ -41,4 +42,16 @@ public class Transaction {
     @UpdateTimestamp
     private LocalDateTime updatedDateTime;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Transaction that = (Transaction) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

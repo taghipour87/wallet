@@ -2,6 +2,7 @@ package com.mt.wallet.transaction.repository;
 
 import com.mt.wallet.transaction.model.entity.Status;
 import com.mt.wallet.transaction.model.entity.Transaction;
+import com.mt.wallet.transaction.model.entity.Type;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -28,6 +29,7 @@ class TransactionRepositoryTest {
                 .playerId(1)
                 .accountNumber("123456789121")
                 .status(Status.CREATED)
+                .type(Type.CREDIT)
                 .build();
         transaction =repository.save(transaction);
         Assertions.assertNotNull(transaction);

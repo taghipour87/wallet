@@ -66,7 +66,6 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setStatus(Status.COMPLETED);
         transaction.setAccountNumber(accountResponseDto.getAccountNumber());
         repository.save(transaction);
-        transaction.setId(null);
         return transaction;
     }
 
