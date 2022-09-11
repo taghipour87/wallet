@@ -1,7 +1,6 @@
 package com.mt.wallet.transaction.model.entity;
 
 import lombok.*;
-import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -26,8 +25,8 @@ public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @Column(nullable = false, unique=true,columnDefinition = "uuid")
+    private Long id;
+    @Column(nullable = false, unique = true, columnDefinition = "uuid")
     private UUID transactionId;
     @Column(nullable = false)
     private long playerId;
@@ -45,9 +44,9 @@ public class Transaction {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Transaction that = (Transaction) o;
-        return Objects.equals(id, that.id);
+        return playerId == that.playerId && Objects.equals(id, that.id);
     }
 
     @Override
