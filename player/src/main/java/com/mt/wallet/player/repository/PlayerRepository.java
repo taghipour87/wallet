@@ -1,6 +1,6 @@
 package com.mt.wallet.player.repository;
 
-import com.mt.wallet.player.model.Player;
+import com.mt.wallet.player.model.entity.Player;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

@@ -1,6 +1,6 @@
 package com.mt.wallet.player.controller;
 
-import com.mt.wallet.player.model.Player;
+import com.mt.wallet.player.model.entity.Player;
 import com.mt.wallet.player.repository.PlayerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

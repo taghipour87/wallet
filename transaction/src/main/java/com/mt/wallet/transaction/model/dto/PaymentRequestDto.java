@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 /**
  * @author Mohammad Taghipour
@@ -13,7 +12,6 @@ import java.util.UUID;
 @Data
 @Builder
 public class PaymentRequestDto {
-    private UUID transactionId;
     private long playerId;
     private BigDecimal amount;
 }

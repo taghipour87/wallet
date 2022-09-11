@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 @Data
 public class TransactionException extends RuntimeException {
 
-    private HttpStatus httpStatus;
+    private final HttpStatus httpStatus;
 
 
     public TransactionException(HttpStatus httpStatus, String message) {

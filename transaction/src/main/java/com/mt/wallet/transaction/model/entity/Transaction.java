@@ -35,7 +35,7 @@ public class Transaction {
     @Column(nullable = false)
     private Status status;
     @Column(nullable = false)
-    private type type;
+    private Type type;
     @CreationTimestamp
     private LocalDateTime createdDateTime;
     @UpdateTimestamp

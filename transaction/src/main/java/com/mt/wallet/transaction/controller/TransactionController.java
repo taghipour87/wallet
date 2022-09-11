@@ -1,6 +1,7 @@
 package com.mt.wallet.transaction.controller;
 
-import com.mt.wallet.transaction.model.dto.TransactionRequestDto;
+import com.mt.wallet.transaction.model.dto.PaymentRequestDto;
+import com.mt.wallet.transaction.model.dto.PaymentResponseDto;
 import com.mt.wallet.transaction.model.entity.Transaction;
 import com.mt.wallet.transaction.service.TransactionService;
 import lombok.RequiredArgsConstructor;
@@ -23,23 +24,23 @@ public class TransactionController {
     private final TransactionService service;
 
     @PostMapping("/debit")
-    public ResponseEntity<Transaction> debit(@RequestBody TransactionRequestDto transactionRequestDto) {
+    public ResponseEntity<PaymentResponseDto> debit(@RequestBody PaymentRequestDto paymentRequestDto) {
         log.info("transaction debit");
-        Transaction transaction = service.debit(transactionRequestDto);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(transaction);
+        PaymentResponseDto responseDto = service.debit(paymentRequestDto);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(responseDto);
     }
 
     @PostMapping("/credit")
-    public ResponseEntity<Transaction> credit(@RequestBody TransactionRequestDto transactionRequestDto) {
+    public ResponseEntity<PaymentResponseDto> credit(@RequestBody PaymentRequestDto paymentRequestDto) {
         log.info("transaction credit");
-        Transaction transaction = service.credit(transactionRequestDto);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(transaction);
+        PaymentResponseDto responseDto = service.credit(paymentRequestDto);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(responseDto);
     }
 
     @GetMapping()
     public ResponseEntity<List<Transaction>> getTransactionsByPlayerId(@RequestParam long playerId) {
         log.info("get all transaction");
-        List<Transaction> transactionList = service.findByPlayId(playerId);
+        List<Transaction> transactionList = service.findByPlayerId(playerId);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(transactionList);
     }
 

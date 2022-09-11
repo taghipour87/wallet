@@ -2,10 +2,10 @@ package com.mt.wallet.transaction.service;
 
 import com.mt.wallet.transaction.model.dto.AccountResponseDto;
 import com.mt.wallet.transaction.model.dto.PaymentRequestDto;
-import com.mt.wallet.transaction.model.dto.TransactionRequestDto;
+import com.mt.wallet.transaction.model.dto.PaymentResponseDto;
 import com.mt.wallet.transaction.model.entity.Status;
 import com.mt.wallet.transaction.model.entity.Transaction;
-import com.mt.wallet.transaction.model.entity.type;
+import com.mt.wallet.transaction.model.entity.Type;
 import com.mt.wallet.transaction.repository.TransactionRepository;
 import com.mt.wallet.transaction.service.client.AccountFeignClient;
 import lombok.RequiredArgsConstructor;
@@ -27,42 +27,34 @@ public class TransactionServiceImpl implements TransactionService {
     private final AccountFeignClient accountFeignClient;
 
     @Override
-    public List<Transaction> findByPlayId(long playerId) {
+    public List<Transaction> findByPlayerId(long playerId) {
         return repository.findByPlayerId(playerId);
     }
 
     @Override
-    public Transaction debit(TransactionRequestDto transactionRequestDto) {
-        Transaction transaction = saveCreatedTransaction(transactionRequestDto, type.DEBIT);
-        PaymentRequestDto paymentRequestDto = getPaymentRequestDto(transactionRequestDto, transaction);
+    public PaymentResponseDto debit(PaymentRequestDto paymentRequestDto) {
+        Transaction createdTransaction = saveCreatedTransaction(paymentRequestDto, Type.DEBIT);
         AccountResponseDto accountResponseDto = accountFeignClient.debit(paymentRequestDto).getBody();
-        return  saveCompletedTransaction(transaction, Objects.requireNonNull(accountResponseDto));
+        Transaction completedTransaction = saveCompletedTransaction(createdTransaction, Objects.requireNonNull(accountResponseDto));
+        return convertToPaymentResponseDto(completedTransaction);
     }
 
     @Override
-    public Transaction credit(TransactionRequestDto transactionRequestDto) {
-        Transaction transaction = saveCreatedTransaction(transactionRequestDto, type.CREDIT);
-        PaymentRequestDto paymentRequestDto = getPaymentRequestDto(transactionRequestDto, transaction);
+    public PaymentResponseDto credit(PaymentRequestDto paymentRequestDto) {
+        Transaction transaction = saveCreatedTransaction(paymentRequestDto, Type.CREDIT);
         AccountResponseDto accountResponseDto = accountFeignClient.credit(paymentRequestDto).getBody();
-        return  saveCompletedTransaction(transaction, Objects.requireNonNull(accountResponseDto));
+        Transaction completedTransaction = saveCompletedTransaction(transaction, Objects.requireNonNull(accountResponseDto));
+        return convertToPaymentResponseDto(completedTransaction);
     }
 
-    private Transaction saveCreatedTransaction(TransactionRequestDto transactionRequestDto, type type) {
+    private Transaction saveCreatedTransaction(PaymentRequestDto paymentRequestDto, Type type) {
         Transaction transaction = Transaction.builder()
                 .transactionId(UUID.randomUUID())
                 .status(Status.CREATED)
                 .type(type)
-                .playerId(transactionRequestDto.getPlayerId())
+                .playerId(paymentRequestDto.getPlayerId())
                 .build();
         return repository.save(transaction);
-    }
-
-    private PaymentRequestDto getPaymentRequestDto(TransactionRequestDto transactionRequestDto, Transaction transaction) {
-        return PaymentRequestDto.builder()
-                .playerId(transactionRequestDto.getPlayerId())
-                .amount(transactionRequestDto.getAmount())
-                .transactionId(transaction.getTransactionId())
-                .build();
     }
 
     private Transaction saveCompletedTransaction(Transaction transaction, AccountResponseDto accountResponseDto) {
@@ -71,6 +63,16 @@ public class TransactionServiceImpl implements TransactionService {
         repository.save(transaction);
         transaction.setId(null);
         return transaction;
+    }
+
+    private PaymentResponseDto convertToPaymentResponseDto(Transaction transaction) {
+        return PaymentResponseDto.builder()
+                .playerId(transaction.getPlayerId())
+                .accountNumber(transaction.getAccountNumber())
+                .transactionId(transaction.getTransactionId())
+                .transactionDateTime(transaction.getUpdatedDateTime())
+                .status(transaction.getStatus())
+                .build();
     }
 
 }

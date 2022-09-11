@@ -1,4 +1,4 @@
-package com.mt.wallet.player.model;
+package com.mt.wallet.player.model.entity;
 
 /**
  * @AUTHOR Mohammad Taghipour

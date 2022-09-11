@@ -1,4 +1,4 @@
-package com.mt.wallet.account.exception;
+package com.mt.wallet.player.exception;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,11 +10,11 @@ import org.springframework.http.HttpStatus;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class AccountException extends RuntimeException {
+public class PlayerException extends RuntimeException {
 
     private final HttpStatus httpStatus;
 
-    public AccountException(HttpStatus httpStatus, String message) {
+    public PlayerException(HttpStatus httpStatus, String message) {
         super(message);
         this.httpStatus = httpStatus;
     }

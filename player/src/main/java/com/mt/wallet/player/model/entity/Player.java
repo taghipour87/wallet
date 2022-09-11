@@ -1,4 +1,4 @@
-package com.mt.wallet.player.model;
+package com.mt.wallet.player.model.entity;
 
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;

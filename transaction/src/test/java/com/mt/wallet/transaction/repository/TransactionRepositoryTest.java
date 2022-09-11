@@ -3,6 +3,7 @@ package com.mt.wallet.transaction.repository;
 import com.mt.wallet.transaction.model.entity.Status;
 import com.mt.wallet.transaction.model.entity.Transaction;
 import lombok.SneakyThrows;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,8 +29,8 @@ class TransactionRepositoryTest {
                 .accountNumber("123456789121")
                 .status(Status.CREATED)
                 .build();
-        repository.save(transaction);
-
+        transaction =repository.save(transaction);
+        Assertions.assertNotNull(transaction);
     }
 
 }

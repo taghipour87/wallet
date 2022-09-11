@@ -1,7 +1,8 @@
 package com.mt.wallet.transaction.service;
 
+import com.mt.wallet.transaction.model.dto.PaymentResponseDto;
 import com.mt.wallet.transaction.model.entity.Transaction;
-import com.mt.wallet.transaction.model.dto.TransactionRequestDto;
+import com.mt.wallet.transaction.model.dto.PaymentRequestDto;
 
 import java.util.List;
 
@@ -11,9 +12,9 @@ import java.util.List;
  */
 public interface TransactionService {
 
-    List<Transaction> findByPlayId(long playerId);
+    List<Transaction> findByPlayerId(long playerId);
 
-    Transaction debit(TransactionRequestDto transactionRequestDto);
+    PaymentResponseDto debit(PaymentRequestDto paymentRequestDto);
 
-    Transaction credit(TransactionRequestDto transactionRequestDto);
+    PaymentResponseDto credit(PaymentRequestDto paymentRequestDto);
 }
