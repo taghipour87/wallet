@@ -3,7 +3,6 @@ package com.mt.wallet.transaction.service;
 import com.mt.wallet.transaction.model.dto.AccountResponseDto;
 import com.mt.wallet.transaction.model.dto.PaymentRequestDto;
 import com.mt.wallet.transaction.model.dto.PaymentResponseDto;
-import com.mt.wallet.transaction.model.dto.PlayerResponseDto;
 import com.mt.wallet.transaction.model.entity.Status;
 import com.mt.wallet.transaction.model.entity.Transaction;
 import com.mt.wallet.transaction.model.entity.Type;

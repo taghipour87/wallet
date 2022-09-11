@@ -14,6 +14,7 @@ import java.util.Optional;
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Lock(LockModeType.OPTIMISTIC_FORCE_INCREMENT)
-    Optional<Account> findWithLockingByPlayerId(long id);
+    Optional<Account> findWithLockingByPlayerId(long playerId);
+    Optional<Account> findByPlayerId(long playerId);
 
 }
