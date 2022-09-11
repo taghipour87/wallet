@@ -27,7 +27,7 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(nullable = false, length = 36, unique=true)
+    @Column(nullable = false, unique=true,columnDefinition = "uuid")
     private UUID transactionId;
     @Column(nullable = false)
     private long playerId;
