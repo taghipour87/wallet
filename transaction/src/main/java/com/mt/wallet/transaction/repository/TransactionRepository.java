@@ -5,7 +5,6 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Mohammad Taghipour
@@ -13,8 +12,5 @@ import java.util.Optional;
  */
 @DynamicUpdate
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
-
-    Optional<Transaction> findFirstByPlayerIdOrderByCreatedDateTimeDesc(long playerId);
-
     List<Transaction> findByPlayerId(long playerId);
 }

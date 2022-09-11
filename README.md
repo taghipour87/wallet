@@ -9,10 +9,14 @@ Tool requirement for running project:
 
 Instruction for deploying and running project:
 
-1. run below command in these directories(wallet and wallet/configserver and wallet/gateway and wallet/discoveryserver)
+1. run following command in these directories(wallet/configserver , wallet/gateway , wallet/discoveryserver)
 
-mvn clean package -DskipTests
+mvn clean package
 
-3. run below command in /wallet directory and wait about 10 minute after that you can test wallet services
+2. Make sure config server and discovery server are up before run following command in wallet directory:
+
+mvn clean package
+
+3. run following command in /wallet directory and wait about 10 minute after that you can test wallet services
 
 docker-compose up -d

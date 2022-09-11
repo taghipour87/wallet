@@ -6,7 +6,9 @@ package com.mt.wallet.account.constant;
  */
 public final class Error {
 
-    private Error(){
+    private Error() {
     }
+
     public static final String PLAYER_DOES_NOT_EXIST = "player does not exist";
+    public static final String BALANCE_IS_NOT_ENOUGH = "You don't have enough balance";
 }
