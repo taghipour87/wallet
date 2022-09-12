@@ -10,8 +10,6 @@ services:
       - "8071:8071"
     networks:
      - wallet
-    depends_on:
-      - zipkin
     environment:
       SPRING_PROFILES_ACTIVE: native
       

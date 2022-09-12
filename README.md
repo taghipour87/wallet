@@ -9,31 +9,25 @@ Tool requirement for running project:
 
 Instruction for deploying and running project:
 
-1. Run following command in these directories(wallet/configserver, wallet/discoveryserver, wallet/gateway)
+1. Run following command in these directories(/wallet/configserver, /wallet/discoveryserver, /wallet/gateway and /wallet)
 
 mvn clean package
 
-Notice: configserver, discoveryserver and gateway are none functional services which other services use them therefore we have to build and run these services before build and run other services.
+Notice:
 
-    1.1 build and run configserver(manage properties files for all services)
-    1.2 build and run discoveryserver(All services should register in discoveryserver because we want find services by name, we don't use IP and Port for comunicating between services therefor we can add same services without concern therfore discover serve making easy some important issue, for example scaling)
-    1.3 build and run gateway(route all request from client to our services therefor we can handle monitoring, log and security issus)
-
-2. Make sure config server and discovery server are up before run following command in wallet directory because for running test case, services need fetch properties files from configserver and register in discovery server:
-
-mvn clean package
-
-3. We should stop configserver and discoveryserver services
+    1.1 configserver(manage properties files for all services)
+    1.2 discoveryserver(All services should register in discoveryserver because we want find services by name, we don't use IP and Port for comunicating between services therefor we can add same services without concern therfore discover serve making easy some important issue, for example scaling)
+    1.3 gateway(route all request from client to our services therefor we can handle monitoring, log and security issus)
 
 Now we can do last step :)
 
-4. run following command in /wallet directory and wait about 10 minute after that you can test wallet services
+2. run following command in /wallet directory and wait about 10 minute after that you can test wallet services
 
 docker-compose up -d
 
 All steps can be done with CI/CD, but I need to do and run the project with Java and Docker according to document
 
 ====================================================================================================================
-=> Idempotency implemented by using UUID and set unique transactionId column in db.
-=> Atomicity implemented by using spring Transactional annotation(we can implement atomicity in complex transaction in micorservices by saga pattern).
+=> Idempotency implemented by using UUID and set unique transactionId column in DB.
+=> Atomicity implemented by using spring Transactional annotation(we can implement atomicity in complex transaction in microservices by saga pattern).
 => Scalability implemented by spring cloud, we can use kubernetes for scaling but according to document, we can't use kubernetes therefore I use Eureka and feign client and docker compose for scaling.

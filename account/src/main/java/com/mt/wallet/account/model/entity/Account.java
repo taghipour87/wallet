@@ -19,6 +19,8 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
+@Builder
+@AllArgsConstructor
 @RequiredArgsConstructor
 public class Account {
 
@@ -26,7 +28,7 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(nullable = false)
-    private BigDecimal balance = new BigDecimal(0);
+    private BigDecimal balance;
     @Column(nullable = false, length = 17, unique=true)
     private String accountNumber;
     @Column(nullable = false, unique=true)
