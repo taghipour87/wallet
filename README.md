@@ -34,7 +34,6 @@ docker-compose up -d
 All steps can be done with CI/CD, but I need to do and run the project with Java and Docker according to document
 
 ====================================================================================================================
-=> Idempotency implemented by using UUID and set unique transactionId column in db   
-=> Atomicity implemented by using spring Transactional annotation(we can implement atomicity in complex transaction in micorservices by saga pattern but for implementing simple wallet, we don't need to use saga pattern )
+=> Idempotency implemented by using UUID and set unique transactionId column in db.
+=> Atomicity implemented by using spring Transactional annotation(we can implement atomicity in complex transaction in micorservices by saga pattern).
 => Scalability implemented by spring cloud, we can use kubernetes for scaling but according to document, we can't use kubernetes therefore I use Eureka and feign client and docker compose for scaling.
-=> 

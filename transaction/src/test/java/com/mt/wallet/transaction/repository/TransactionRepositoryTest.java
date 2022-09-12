@@ -23,7 +23,7 @@ class TransactionRepositoryTest {
     TransactionRepository repository;
 
     @Test
-    void save() {
+    void saveT() {
         Transaction transaction = Transaction.builder()
                 .transactionId(UUID.randomUUID())
                 .playerId(1)
@@ -36,7 +36,7 @@ class TransactionRepositoryTest {
     }
 
     @Test
-    void checkIdempotency() {
+    void checkIdempotencyT() {
         UUID uuid = UUID.randomUUID();
         Transaction transaction_1 = Transaction.builder()
                 .transactionId(uuid)
@@ -51,7 +51,7 @@ class TransactionRepositoryTest {
                 .accountNumber("123456789121")
                 .status(Status.CREATED)
                 .type(Type.CREDIT)
-                .build();;
+                .build();
         transaction_1 =repository.save(transaction_1);
         try {
             transaction_2 = repository.save(transaction_2);

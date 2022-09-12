@@ -7,6 +7,7 @@ import com.mt.wallet.account.model.dto.PaymentRequestDto;
 import com.mt.wallet.account.model.entity.Account;
 import com.mt.wallet.account.model.entity.Status;
 import com.mt.wallet.account.repository.AccountRepository;
+import com.mt.wallet.account.service.client.PlayerFeignClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -25,10 +26,12 @@ import static com.mt.wallet.account.constant.Error.BALANCE_IS_NOT_ENOUGH;
 public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository repository;
+    private final PlayerFeignClient playerFeignClient;
 
     @Override
     @Transactional
     public BalanceResponseDto getBalance(long playerId) {
+        playerFeignClient.getPlayer(playerId);
         Account account = repository.findByPlayerId(playerId)
                 .orElseThrow(() -> new AccountException(HttpStatus.INTERNAL_SERVER_ERROR, Error.PLAYER_DOES_NOT_EXIST));
         if (account.getStatus().equals(Status.INACTIVE))

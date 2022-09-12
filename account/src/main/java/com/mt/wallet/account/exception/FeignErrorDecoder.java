@@ -1,7 +1,7 @@
-package com.mt.wallet.transaction.exception;
+package com.mt.wallet.account.exception;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mt.wallet.transaction.model.ErrorResponse;
+import com.mt.wallet.account.model.ErrorResponse;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import lombok.SneakyThrows;
@@ -20,9 +20,9 @@ public class FeignErrorDecoder implements ErrorDecoder {
     @SneakyThrows
     @Override
     public Exception decode(String methodKey, Response response) {
-            String body = new String(response.body().asInputStream().readAllBytes());
-            ErrorResponse errorResponse = new ObjectMapper().readValue(body, ErrorResponse.class);
-            return new TransactionException(errorResponse.getStatus(), errorResponse.getMessage());
+        String body = new String(response.body().asInputStream().readAllBytes());
+        ErrorResponse errorResponse = new ObjectMapper().readValue(body, ErrorResponse.class);
+        return new AccountException(errorResponse.getStatus(), errorResponse.getMessage());
     }
 
 }
