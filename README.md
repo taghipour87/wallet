@@ -9,7 +9,7 @@ Tool requirement for running project:
 
 Instruction for deploying and running project:
 
-1. run following command in these directories(wallet/configserver, wallet/discoveryserver, wallet/gateway)
+1. Run following command in these directories(wallet/configserver, wallet/discoveryserver, wallet/gateway)
 
 mvn clean package
 
@@ -23,7 +23,7 @@ Notice: configserver, discoveryserver and gateway are none functional services w
 
 mvn clean package
 
-3. we should stop configserver and discoveryserver services
+3. We should stop configserver and discoveryserver services
 
 Now we can do last step :)
 
