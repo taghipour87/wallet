@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.UUID;
 
@@ -21,7 +22,6 @@ class TransactionRepositoryTest {
     @Autowired
     TransactionRepository repository;
 
-    @SneakyThrows
     @Test
     void save() {
         Transaction transaction = Transaction.builder()
@@ -33,6 +33,32 @@ class TransactionRepositoryTest {
                 .build();
         transaction =repository.save(transaction);
         Assertions.assertNotNull(transaction);
+    }
+
+    @Test
+    void checkIdempotency() {
+        UUID uuid = UUID.randomUUID();
+        Transaction transaction_1 = Transaction.builder()
+                .transactionId(uuid)
+                .playerId(1)
+                .accountNumber("123456789121")
+                .status(Status.CREATED)
+                .type(Type.CREDIT)
+                .build();
+        Transaction transaction_2 = Transaction.builder()
+                .transactionId(uuid)
+                .playerId(1)
+                .accountNumber("123456789121")
+                .status(Status.CREATED)
+                .type(Type.CREDIT)
+                .build();;
+        transaction_1 =repository.save(transaction_1);
+        try {
+            transaction_2 = repository.save(transaction_2);
+            System.out.println();
+        } catch (Exception e) {
+            Assertions.assertInstanceOf(DataIntegrityViolationException.class, e, "transactionId is not unique");
+        }
     }
 
 }
