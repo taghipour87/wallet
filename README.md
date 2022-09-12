@@ -13,7 +13,7 @@ Instruction for deploying and running project:
 
 mvn clean package
 
-Notice: configserver, discoveryserver and gateway are none functional services which another services use these services therefore we have to build and run these services before build and run another services.
+Notice: configserver, discoveryserver and gateway are none functional services which other services use them therefore we have to build and run these services before build and run other services.
 
     1.1 build and run configserver(manage properties files for all services)
     1.2 build and run discoveryserver(All services should register in discoveryserver because we want find services by name, we don't use IP and Port for comunicating between services therefor we can add same services without concern therfore discover serve making easy some important issue, for example scaling)
@@ -23,7 +23,7 @@ Notice: configserver, discoveryserver and gateway are none functional services w
 
 mvn clean package
 
-3. we should down configserver and discoveryserver
+3. we should stop configserver and discoveryserver services
 
 Now we can do last step :)
 
@@ -31,4 +31,4 @@ Now we can do last step :)
 
 docker-compose up -d
 
-All steps can be done with CI/CD, but I need to do and run the project with Java and Docker as per the instructions in the documentation
+All steps can be done with CI/CD, but I need to do and run the project with Java and Docker according to document
