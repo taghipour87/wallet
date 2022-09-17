@@ -27,6 +27,8 @@ docker-compose up -d
 
 All steps can be done with CI/CD, but I need to do and run the project with Java and Docker according to document
 
+3. You can import postman file collection for test wallet services(The file is in root of project)
+
 ====================================================================================================================
 => Idempotency implemented by using UUID and set unique transactionId column in DB.
 => Atomicity implemented by using spring Transactional annotation(we can implement atomicity in complex transaction in microservices by saga pattern).

@@ -1,0 +1,114 @@
+{
+	"info": {
+		"_postman_id": "c60cbc31-0dbb-4e86-9d67-7e9222da7686",
+		"name": "Wallet-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "debit-gateway",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"playerId\":1,\r\n  \"amount\": 950\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8072/transaction/debit",
+					"host": [
+						"localhost"
+					],
+					"port": "8072",
+					"path": [
+						"transaction",
+						"debit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "balance-gateway",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8072/account/balance?playerId=1",
+					"host": [
+						"localhost"
+					],
+					"port": "8072",
+					"path": [
+						"account",
+						"balance"
+					],
+					"query": [
+						{
+							"key": "playerId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "credit-gateway",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"playerId\": 1,\r\n  \"amount\": 10000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8072/transaction/credit",
+					"host": [
+						"localhost"
+					],
+					"port": "8072",
+					"path": [
+						"transaction",
+						"credit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get-Transactions-By-PlayerId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8072/transaction?playerId=1",
+					"host": [
+						"localhost"
+					],
+					"port": "8072",
+					"path": [
+						"transaction"
+					],
+					"query": [
+						{
+							"key": "playerId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
