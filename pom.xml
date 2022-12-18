@@ -18,7 +18,7 @@
 	<artifactId>wallet</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>wallet</name>
-	<description>Wallet project for LeoVegas</description>
+	<description>Wallet project</description>
 
 	<properties>
 		<java.version>11</java.version>
