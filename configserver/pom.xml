@@ -11,7 +11,7 @@
 	<groupId>com.mt.wallet</groupId>
 	<artifactId>configserver</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>configserver</name>
+	<name>config-server</name>
 	<description>Config server project for Wallet Microservices</description>
 	<properties>
 		<java.version>11</java.version>
