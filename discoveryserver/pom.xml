@@ -11,10 +11,10 @@
     <groupId>com.mt.wallet</groupId>
     <artifactId>discoveryserver</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>discoveryserver</name>
+    <name>discovery-server</name>
     <description>Service discovery project for Wallet Microservices</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>19</java.version>
         <spring-cloud.version>2021.0.3</spring-cloud.version>
     </properties>
     <dependencies>
